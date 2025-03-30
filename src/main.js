@@ -94,6 +94,10 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.set(-9, 1, 3);
 scene.add(camera);
+// Camera orbit settings
+let orbitAngle = 0;
+const orbitRadius = 15;
+const orbitSpeed = 0.2;
 
 // Controls
 const controls = new OrbitControls(camera, canvas);
@@ -135,6 +139,11 @@ const tick = () => {
     mixer.update(deltaTime);
   }
 
+  // Orbit camera around the wizard
+  orbitAngle += orbitSpeed * deltaTime;
+  camera.position.x = Math.cos(orbitAngle) * orbitRadius;
+  camera.position.z = Math.sin(orbitAngle) * orbitRadius;
+  camera.lookAt(0, 2, 0);
   // Animate floors
   floorMesh.position.z -= currentSpeed;
   floorMesh2.position.z -= currentSpeed;
